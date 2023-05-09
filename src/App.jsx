@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import ToDo from "./components/ToDo.jsx";
 
 const Wrapper = styled.div`
   display: block;
@@ -18,19 +19,7 @@ const SubTitle = styled.h2`
   font-weight: normal;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 `;
-const ToDoWrapper = styled.div`
-  display: flex;
-`;
-const Checkbox = styled.input.attrs({ type: "checkbox" })`
-  width: 25px;
-  height: 25px;
-  margin-right: 12px;
-`;
-const ToDoItem = styled.label`
-  font-size: 20px;
-  text-decoration: ${(props) =>
-    props.$done === true ? "line-through" : "none"};
-`;
+
 const ToDoForm = styled.form`
   display: flex;
 `;
@@ -73,6 +62,19 @@ function App() {
     todo.complete = !todo.complete;
     setTodos(newTodos);
   };
+
+  const handleDeleteTodo = (uuid) => {
+    //Get all ToDos that are not the one we want to delete
+    const newTodos = todos.filter((todo) => todo.uuid !== uuid);
+    //Set our todos to the new todo
+    setTodos(newTodos);
+  };
+
+  const handleClearTodos = () => {
+    const newTodos = todos.filter((todo) => todo.complete !== true);
+    setTodos(newTodos);
+  };
+
   return (
     <Wrapper>
       <Title>Styled Component Todo App</Title>
@@ -80,16 +82,12 @@ function App() {
         <SubTitle>ToDos:</SubTitle>
         {todos?.map((todo) => {
           return (
-            <ToDoWrapper key={todo.uuid}>
-              <Checkbox
-                id={todo.uuid}
-                checked={todo.complete}
-                onChange={() => handleUpdateTodo(todo.uuid)}
-              />
-              <ToDoItem htmlFor={todo.uuid} $done={todo.complete}>
-                {todo.todo}
-              </ToDoItem>
-            </ToDoWrapper>
+            <ToDo
+              key={todo.uuid}
+              {...todo}
+              handleUpdateTodo={handleUpdateTodo}
+              handleDeleteTodo={handleDeleteTodo}
+            />
           );
         })}
       </>
@@ -97,8 +95,16 @@ function App() {
         <SubTitle>Add Todo</SubTitle>
         <ToDoForm onSubmit={handleAddToDo}>
           <ToDoInput ref={$todoInput} placeholder="Add Todo" required />
-          <ToDoButton>Add Todo</ToDoButton>
+          <ToDoButton>Add Todo #{todos.length}</ToDoButton>
         </ToDoForm>
+        <ToDoButton
+          type="button"
+          onClick={() => {
+            handleClearTodos();
+          }}
+        >
+          Clear Completed
+        </ToDoButton>
       </div>
     </Wrapper>
   );

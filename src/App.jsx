@@ -4,13 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 import ToDo from "./components/ToDo.jsx";
 
 const Wrapper = styled.div`
-  display: block;
-  width: 320px;
-  margin: 25px auto 0 auto;
   background: #666;
+  width: 33%;
   color: #fff;
   padding: 12px;
   border-radius: 5px;
+  margin: 1%;
 `;
 const Title = styled.h1`
   font-weight: normal;
@@ -76,9 +75,9 @@ function App() {
   };
 
   return (
-    <Wrapper>
-      <Title>Styled Component Todo App</Title>
-      <>
+    <>
+      <Wrapper>
+        <Title>Styled Component Todo App</Title>
         <SubTitle>ToDos:</SubTitle>
         {todos?.map((todo) => {
           return (
@@ -90,23 +89,23 @@ function App() {
             />
           );
         })}
-      </>
-      <div>
-        <SubTitle>Add Todo</SubTitle>
-        <ToDoForm onSubmit={handleAddToDo}>
-          <ToDoInput ref={$todoInput} placeholder="Add Todo" required />
-          <ToDoButton>Add Todo #{todos.length}</ToDoButton>
-        </ToDoForm>
-        <ToDoButton
-          type="button"
-          onClick={() => {
-            handleClearTodos();
-          }}
-        >
-          Clear Completed
-        </ToDoButton>
-      </div>
-    </Wrapper>
+        <div>
+          <SubTitle>Add Todo</SubTitle>
+          <ToDoForm onSubmit={handleAddToDo}>
+            <ToDoInput ref={$todoInput} placeholder="Add Todo" required />
+            <ToDoButton>Add Todo #{todos.length}</ToDoButton>
+          </ToDoForm>
+          <ToDoButton
+            type="button"
+            onClick={() => {
+              handleClearTodos();
+            }}
+          >
+            Clear Completed
+          </ToDoButton>
+        </div>
+      </Wrapper>
+    </>
   );
 }
 

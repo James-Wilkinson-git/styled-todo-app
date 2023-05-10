@@ -4,7 +4,8 @@ const ToDoWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  background: ${(props) => (props.$highlight === true ? "red" : "none")};
+  background: ${(props) =>
+    props.$highlight === true ? "rgba(255, 99, 71, 0.7)" : "none"};
 `;
 const Checkbox = styled.input.attrs({ type: "checkbox" })`
   width: 25px;

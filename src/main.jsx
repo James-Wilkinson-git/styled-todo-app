@@ -11,6 +11,12 @@ export const GlobalStyle = createGlobalStyle`
     background-color: #333;
     font-family: Arial, Helvetica, sans-serif;
   }
+  #root {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
